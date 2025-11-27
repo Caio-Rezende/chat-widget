@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatWidgetProps } from '../types';
 import { ChatWindow } from './ChatWindow';
-import '../styles/widget.css';
 
 export const ChatWidget: React.FC<ChatWidgetProps> = ({
   apiKey,
