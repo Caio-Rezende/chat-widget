@@ -19,6 +19,7 @@ interface ChatWindowProps {
   style?: React.CSSProperties;
   theme?: 'light' | 'dark' | 'auto';
   title: string;
+  userId?: string;
   welcomeMessage: string;
   width?: number;
   onClose: () => void;
@@ -40,6 +41,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   style = {},
   theme = 'light',
   title,
+  userId = '',
   welcomeMessage,
   onClose,
   onMessageSent,
@@ -48,6 +50,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 }) => {
   const { messages, isLoading, error, sendMessage, clearError } = useChat({
     apiKey,
+    userId,
     welcomeMessage,
     onMessageSent,
     onMessageReceived,
@@ -68,6 +71,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     >
       <ChatHeader 
         closeIcon={closeIcon} 
+        disabled={disabled}
         isOnline={isOnline}
         primaryColor={primaryColor}
         theme={theme}

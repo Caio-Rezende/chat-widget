@@ -3,6 +3,7 @@ import { ThemeMode } from "../types";
 
 interface ChatHeaderProps {
     closeIcon: string;
+    disabled?: boolean;
     isOnline?: boolean;
     primaryColor?: string;
     theme?: ThemeMode;
@@ -12,6 +13,7 @@ interface ChatHeaderProps {
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({
     closeIcon,
+    disabled = false,
     isOnline = true,
     primaryColor,
     theme = "light",
@@ -40,10 +42,16 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
             <div className="chat-status">
                 <span
                     className={`chat-status-dot chat-status-dot--${
-                        isOnline ? "online" : "offline"
+                        isOnline && !disabled ? "online" : "offline"
                     }`}
                 />
-                <span>{isOnline ? "Online" : "Offline"}</span>
+                <span>
+                    {disabled
+                        ? "In Maintenance"
+                        : isOnline
+                        ? "Online"
+                        : "Offline"}
+                </span>
             </div>
             <button
                 className="chat-close-button"

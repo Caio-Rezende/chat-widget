@@ -28,6 +28,7 @@ export interface ChatWidgetProps {
     style?: React.CSSProperties;
     theme?: ThemeMode | "auto";
     title?: string;
+    userId?: string;
     welcomeMessage?: string;
     width?: number;
     onMessageSent?: (message: string) => void;

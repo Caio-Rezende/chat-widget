@@ -20,6 +20,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
   style = {},
   theme = 'light',
   title = 'Chat Assistant',
+  userId = '',
   welcomeMessage = 'Hello! How can I help you today?',
   width = 350,
   onToggle,
@@ -117,6 +118,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
           style={chatWindowStyle}
           theme={theme}
           title={title}
+          userId={userId}
           welcomeMessage={welcomeMessage}
           width={width}
           onClose={() => {
