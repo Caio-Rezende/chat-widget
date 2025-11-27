@@ -7,6 +7,9 @@ interface MessageListProps {
   messages: Message[];
   isLoading: boolean;
   error: string | null;
+  theme?: 'light' | 'dark' | 'auto';
+  showTimestamp?: boolean;
+  allowMarkdown?: boolean;
   onClearError: () => void;
 }
 
@@ -14,6 +17,9 @@ export const MessageList: React.FC<MessageListProps> = ({
   messages,
   isLoading,
   error,
+  theme = 'light',
+  showTimestamp = false,
+  allowMarkdown = false,
   onClearError
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -26,10 +32,15 @@ export const MessageList: React.FC<MessageListProps> = ({
     scrollToBottom();
   }, [messages, isLoading]);
 
+  const messageListClasses = [
+    'chat-messages',
+    `chat-messages--${theme}`,
+  ].filter(Boolean).join(' ');
+
   return (
-    <div className="chat-messages">
+    <div className={messageListClasses}>
       {messages.length === 0 && !isLoading && (
-        <div className="welcome-message">
+        <div className={`welcome-message welcome-message--${theme}`}>
           Welcome! Send a message to start the conversation.
         </div>
       )}
@@ -38,24 +49,22 @@ export const MessageList: React.FC<MessageListProps> = ({
         <MessageBubble
           key={message.id}
           message={message}
+          theme={theme}
+          showTimestamp={showTimestamp}
+          allowMarkdown={allowMarkdown}
         />
       ))}
       
-      {isLoading && <LoadingIndicator />}
+      {isLoading && <LoadingIndicator theme={theme} />}
       
       {error && (
-        <div className="error-message">
+        <div className={`error-message error-message--${theme}`}>
           <span>{error}</span>
           <button
             onClick={onClearError}
-            style={{ 
-              marginLeft: '8px', 
-              background: 'none', 
-              border: 'none', 
-              color: 'inherit',
-              cursor: 'pointer',
-              textDecoration: 'underline'
-            }}
+            className="error-close-button"
+            aria-label="Clear error"
+            type="button"
           >
             ✕
           </button>

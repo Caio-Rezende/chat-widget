@@ -11,6 +11,15 @@ interface ChatWindowProps {
   welcomeMessage: string;
   closeIcon: string;
   sendIcon: string;
+  theme?: 'light' | 'dark' | 'auto';
+  primaryColor?: string;
+  height?: number;
+  width?: number;
+  maxHeight?: number;
+  showTimestamp?: boolean;
+  allowMarkdown?: boolean;
+  disabled?: boolean;
+  style?: React.CSSProperties;
   onClose: () => void;
   onMessageSent?: (message: string) => void;
   onMessageReceived?: (message: string) => void;
@@ -24,18 +33,18 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   welcomeMessage,
   closeIcon,
   sendIcon,
+  theme = 'light',
+  primaryColor,
+  showTimestamp = false,
+  allowMarkdown = false,
+  disabled = false,
+  style = {},
   onClose,
   onMessageSent,
   onMessageReceived,
   onError,
 }) => {
-  const {
-    messages,
-    isLoading,
-    error,
-    sendMessage,
-    clearError
-  } = useChat({
+  const { messages, isLoading, error, sendMessage, clearError } = useChat({
     apiKey,
     welcomeMessage,
     onMessageSent,
@@ -43,26 +52,41 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     onError,
   });
 
+  const windowStyle: React.CSSProperties = {
+    ...style,
+    ...(primaryColor && {
+      '--chat-primary-color': primaryColor,
+    } as React.CSSProperties),
+  };
+
   return (
-    <div className="chat-window chat-window--open">
-      <ChatHeader
-        title={title}
-        closeIcon={closeIcon}
+    <div 
+      className={`chat-window chat-window--open chat-window--${theme}`}
+      style={windowStyle}
+    >
+      <ChatHeader 
+        title={title} 
+        closeIcon={closeIcon} 
         onClose={onClose}
+        theme={theme}
+        primaryColor={primaryColor}
       />
-      
-      <MessageList
-        messages={messages}
-        isLoading={isLoading}
-        error={error}
-        onClearError={clearError}
+      <MessageList 
+        messages={messages} 
+        isLoading={isLoading} 
+        error={error} 
+        theme={theme}
+        showTimestamp={showTimestamp}
+        allowMarkdown={allowMarkdown}
+        onClearError={clearError} 
       />
-      
-      <MessageInput
-        placeholder={placeholder}
-        sendIcon={sendIcon}
-        isLoading={isLoading}
-        onSendMessage={sendMessage}
+      <MessageInput 
+        placeholder={placeholder} 
+        sendIcon={sendIcon} 
+        isLoading={isLoading || disabled}
+        theme={theme}
+        primaryColor={primaryColor}
+        onSendMessage={sendMessage} 
       />
     </div>
   );

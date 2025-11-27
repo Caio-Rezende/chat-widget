@@ -12,6 +12,13 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
   buttonIcon = '💬',
   closeIcon = '×',
   sendIcon = '→',
+  primaryColor,
+  height = 500,
+  width = 350,
+  maxHeight = 600,
+  disabled = false,
+  showTimestamp = false,
+  allowMarkdown = false,
   onToggle,
   onMessageSent,
   onMessageReceived,
@@ -23,6 +30,8 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
   const widgetRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = () => {
+    if (disabled) return;
+    
     const newState = !isOpen;
     setIsOpen(newState);
     onToggle?.(newState);
@@ -49,10 +58,26 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
     };
   }, [isOpen]);
 
+  // Create computed styles for the widget
+  const computedStyle: React.CSSProperties = {
+    ...style,
+    ...(primaryColor && {
+      '--chat-primary-color': primaryColor,
+    } as React.CSSProperties),
+  };
+
+  // Create styles for the chat window
+  const chatWindowStyle: React.CSSProperties = {
+    width: `${width}px`,
+    height: `${height}px`,
+    maxHeight: `${maxHeight}px`,
+  };
+
   const widgetClasses = [
     'chat-widget',
     `chat-widget--${position}`,
     `chat-widget--${theme}`,
+    disabled && 'chat-widget--disabled',
     className
   ].filter(Boolean).join(' ');
 
@@ -60,12 +85,13 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
     <div 
       ref={widgetRef}
       className={widgetClasses}
-      style={style}
+      style={computedStyle}
     >
       {/* Toggle Button */}
       <button
         className="chat-toggle-button"
         onClick={handleToggle}
+        disabled={disabled}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
         type="button"
       >
@@ -81,6 +107,15 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
           welcomeMessage={welcomeMessage}
           closeIcon={closeIcon}
           sendIcon={sendIcon}
+          theme={theme}
+          primaryColor={primaryColor}
+          height={height}
+          width={width}
+          maxHeight={maxHeight}
+          showTimestamp={showTimestamp}
+          allowMarkdown={allowMarkdown}
+          disabled={disabled}
+          style={chatWindowStyle}
           onClose={() => {
             setIsOpen(false);
             onToggle?.(false);

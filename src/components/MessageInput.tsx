@@ -4,6 +4,8 @@ interface MessageInputProps {
   placeholder: string;
   sendIcon: string;
   isLoading: boolean;
+  theme?: 'light' | 'dark' | 'auto';
+  primaryColor?: string;
   onSendMessage: (message: string) => void;
 }
 
@@ -11,6 +13,8 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   placeholder,
   sendIcon,
   isLoading,
+  theme = 'light',
+  primaryColor,
   onSendMessage
 }) => {
   const [message, setMessage] = useState('');
@@ -45,11 +49,33 @@ export const MessageInput: React.FC<MessageInputProps> = ({
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
+  // Create computed styles for theming
+  const containerStyle: React.CSSProperties = {
+    ...(primaryColor && {
+      '--chat-primary-color': primaryColor,
+    } as React.CSSProperties),
+  };
+
+  const containerClasses = [
+    'chat-input-container',
+    `chat-input-container--${theme}`,
+  ].filter(Boolean).join(' ');
+
+  const inputClasses = [
+    'chat-input',
+    `chat-input--${theme}`,
+  ].filter(Boolean).join(' ');
+
+  const buttonClasses = [
+    'chat-send-button',
+    `chat-send-button--${theme}`,
+  ].filter(Boolean).join(' ');
+
   return (
-    <div className="chat-input-container">
+    <div className={containerClasses} style={containerStyle}>
       <textarea
         ref={textareaRef}
-        className="chat-input"
+        className={inputClasses}
         value={message}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
@@ -58,7 +84,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         disabled={isLoading}
       />
       <button
-        className="chat-send-button"
+        className={buttonClasses}
         onClick={handleSend}
         disabled={!message.trim() || isLoading}
         aria-label="Send message"
