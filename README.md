@@ -43,6 +43,7 @@ function App() {
 -   📝 **Markdown Support** - Rich text formatting
 -   ⏰ **Timestamps** - Optional message timestamps
 -   🟢 **Status Indicators** - Online/offline status
+-   💾 **Local Storage** - Persistent chat history per user ID
 -   🎪 **Storybook Ready** - Component documentation included
 
 ## 🔧 Configuration
@@ -72,12 +73,13 @@ function App() {
 
 ### Feature Props
 
-| Prop            | Type      | Default | Description               |
-| --------------- | --------- | ------- | ------------------------- |
-| `allowMarkdown` | `boolean` | `false` | Enable markdown rendering |
-| `showTimestamp` | `boolean` | `false` | Show message timestamps   |
-| `disabled`      | `boolean` | `false` | Disable chat input        |
-| `isOnline`      | `boolean` | `true`  | Online status indicator   |
+| Prop            | Type      | Default | Description                |
+| --------------- | --------- | ------- | -------------------------- |
+| `allowMarkdown` | `boolean` | `false` | Enable markdown rendering  |
+| `showTimestamp` | `boolean` | `false` | Show message timestamps    |
+| `disabled`      | `boolean` | `false` | Disable chat input         |
+| `isOnline`      | `boolean` | `true`  | Online status indicator    |
+| `userId`        | `string`  | ``.     | User Id to isolate storage |
 
 ### Event Props
 
