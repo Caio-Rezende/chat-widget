@@ -1,18 +1,21 @@
 import React from "react";
+import { ThemeMode } from "../types";
 
 interface ChatHeaderProps {
-    title: string;
     closeIcon: string;
-    theme?: "light" | "dark" | "auto";
+    isOnline?: boolean;
     primaryColor?: string;
+    theme?: ThemeMode;
+    title: string;
     onClose: () => void;
 }
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({
-    title,
     closeIcon,
-    theme = "light",
+    isOnline = true,
     primaryColor,
+    theme = "light",
+    title,
     onClose,
 }) => {
     // Create computed styles for theming
@@ -34,6 +37,14 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
             data-has-primary-color={primaryColor ? "true" : undefined}
         >
             <h3 className="chat-title">{title}</h3>
+            <div className="chat-status">
+                <span
+                    className={`chat-status-dot chat-status-dot--${
+                        isOnline ? "online" : "offline"
+                    }`}
+                />
+                <span>{isOnline ? "Online" : "Offline"}</span>
+            </div>
             <button
                 className="chat-close-button"
                 onClick={onClose}

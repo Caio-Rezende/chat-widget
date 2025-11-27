@@ -1,20 +1,20 @@
 import React, { useState, useRef, KeyboardEvent } from 'react';
 
 interface MessageInputProps {
-  placeholder: string;
-  sendIcon: string;
   isLoading: boolean;
-  theme?: 'light' | 'dark' | 'auto';
+  placeholder: string;
   primaryColor?: string;
+  sendIcon: string;
+  theme?: 'light' | 'dark' | 'auto';
   onSendMessage: (message: string) => void;
 }
 
 export const MessageInput: React.FC<MessageInputProps> = ({
-  placeholder,
-  sendIcon,
   isLoading,
-  theme = 'light',
+  placeholder,
   primaryColor,
+  sendIcon,
+  theme = 'light',
   onSendMessage
 }) => {
   const [message, setMessage] = useState('');

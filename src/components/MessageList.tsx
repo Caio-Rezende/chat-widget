@@ -4,22 +4,22 @@ import { MessageBubble } from './MessageBubble';
 import { LoadingIndicator } from './LoadingIndicator';
 
 interface MessageListProps {
-  messages: Message[];
-  isLoading: boolean;
-  error: string | null;
-  theme?: 'light' | 'dark' | 'auto';
-  showTimestamp?: boolean;
   allowMarkdown?: boolean;
+  error: string | null;
+  isLoading: boolean;
+  messages: Message[];
+  showTimestamp?: boolean;
+  theme?: 'light' | 'dark' | 'auto';
   onClearError: () => void;
 }
 
 export const MessageList: React.FC<MessageListProps> = ({
-  messages,
-  isLoading,
-  error,
-  theme = 'light',
-  showTimestamp = false,
   allowMarkdown = false,
+  error,
+  isLoading,
+  messages,
+  showTimestamp = false,
+  theme = 'light',
   onClearError
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);

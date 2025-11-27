@@ -2,17 +2,17 @@ import React from 'react';
 import { Message } from '../types';
 
 interface MessageBubbleProps {
-  message: Message;
-  theme?: 'light' | 'dark' | 'auto';
-  showTimestamp?: boolean;
   allowMarkdown?: boolean;
+  message: Message;
+  showTimestamp?: boolean;
+  theme?: 'light' | 'dark' | 'auto';
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ 
+  allowMarkdown = false,
   message, 
-  theme = 'light',
   showTimestamp = false,
-  allowMarkdown = false
+  theme = 'light',
 }) => {
   const formatTimestamp = (timestamp: Date) => {
     return timestamp.toLocaleTimeString([], { 

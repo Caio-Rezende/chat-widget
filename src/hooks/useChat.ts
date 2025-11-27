@@ -10,9 +10,9 @@ export interface UseChatProps {
 }
 
 export interface UseChatReturn {
-  messages: Message[];
-  isLoading: boolean;
   error: string | null;
+  isLoading: boolean;
+  messages: Message[];
   sendMessage: (content: string) => Promise<void>;
   clearMessages: () => void;
   clearError: () => void;
@@ -191,9 +191,9 @@ export const useChat = ({
   }, []);
 
   return {
-    messages,
-    isLoading,
     error,
+    isLoading,
+    messages,
     sendMessage,
     clearMessages,
     clearError,

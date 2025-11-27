@@ -3,28 +3,29 @@ import { ChatWidgetProps } from '../types';
 import { ChatWindow } from './ChatWindow';
 
 export const ChatWidget: React.FC<ChatWidgetProps> = ({
+  allowMarkdown = false,
   apiKey,
+  buttonIcon = '💬',
+  className = '',
+  closeIcon = '×',
+  disabled = false,
+  height = 500,
+  isOnline = false,
+  maxHeight = 600,
+  placeholder = 'Type your message...',
   position = 'bottom-right',
+  primaryColor,
+  sendIcon = '→',
+  showTimestamp = false,
+  style = {},
   theme = 'light',
   title = 'Chat Assistant',
-  placeholder = 'Type your message...',
   welcomeMessage = 'Hello! How can I help you today?',
-  buttonIcon = '💬',
-  closeIcon = '×',
-  sendIcon = '→',
-  primaryColor,
-  height = 500,
   width = 350,
-  maxHeight = 600,
-  disabled = false,
-  showTimestamp = false,
-  allowMarkdown = false,
   onToggle,
   onMessageSent,
   onMessageReceived,
   onError,
-  className = '',
-  style = {},
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const widgetRef = useRef<HTMLDivElement>(null);
@@ -78,6 +79,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
     `chat-widget--${position}`,
     `chat-widget--${theme}`,
     disabled && 'chat-widget--disabled',
+    !isOnline && 'chat-widget--offline',
     className
   ].filter(Boolean).join(' ');
 
@@ -101,21 +103,22 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
       {/* Chat Window */}
       {isOpen && (
         <ChatWindow
-          apiKey={apiKey}
-          title={title}
-          placeholder={placeholder}
-          welcomeMessage={welcomeMessage}
-          closeIcon={closeIcon}
-          sendIcon={sendIcon}
-          theme={theme}
-          primaryColor={primaryColor}
-          height={height}
-          width={width}
-          maxHeight={maxHeight}
-          showTimestamp={showTimestamp}
           allowMarkdown={allowMarkdown}
-          disabled={disabled}
+          apiKey={apiKey}
+          closeIcon={closeIcon}
+          disabled={disabled || !isOnline}
+          height={height}
+          isOnline={isOnline}
+          maxHeight={maxHeight}
+          placeholder={placeholder}
+          primaryColor={primaryColor}
+          sendIcon={sendIcon}
+          showTimestamp={showTimestamp}
           style={chatWindowStyle}
+          theme={theme}
+          title={title}
+          welcomeMessage={welcomeMessage}
+          width={width}
           onClose={() => {
             setIsOpen(false);
             onToggle?.(false);
