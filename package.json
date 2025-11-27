@@ -1,5 +1,5 @@
 {
-  "name": "embeddable-chat-widget",
+  "name": "caios-embeddable-chat-widget",
   "version": "1.0.0",
   "description": "Embeddable React chat widget with ChatGPT integration",
   "main": "dist/index.js",
