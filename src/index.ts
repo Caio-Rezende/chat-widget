@@ -7,4 +7,4 @@ export type {
 } from './types';
 
 // CSS import for consumers
-import './styles/widget.css';
+import '../src/styles/widget.css';
